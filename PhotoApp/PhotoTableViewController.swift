@@ -7,34 +7,28 @@
 //
 
 import UIKit
+import GameKit
+import Alamofire
+import SwiftyJSON
+import Kingfisher
+
 
 class PhotoTableViewController: UITableViewController {
     //MARK: Properties
     
     var photos: [Photo] = []
+    
+    var category: [String] = ["nature", "backgrounds", "science", "education", "health",
+                              "places", "animals", "industry", "food", "computer",
+                              "sports", "transportaion", "travel", "building", "business"]
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // load the sample data
-        Photo.photosByCategory("nature", completionHandler: { (results, error) in
-            if let error = error {
-                // got error in getting the data, need to handle it
-                print(error.localizedDescription)
-                return
-            }
-            guard let photos = results else {
-                print("Error: Photos are nil")
-                return
-            }
-            self.photos = photos
-            
-            // Reload the data in main thread
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            } 
-        })
-
+        let randomNumber = GKRandomSource.sharedRandom().nextInt(upperBound: category.count)
+    
+        loadPhotos(forCategory: category[randomNumber])
     }
 
     // MARK: - Table view data source
@@ -65,82 +59,44 @@ class PhotoTableViewController: UITableViewController {
         cell.favoriteCounterLabel.text = String(photo.favorites)
         
         let pictureURL = URL(string: photo.previewURL)!
+        cell.previewImage.kf.setImage(with: pictureURL, placeholder: UIImage(named: "default"))
         
-        // Creating a session object with the default configuration.
-        let session = URLSession(configuration: .default)
-        
-        let pictureDownloadTask = session.dataTask(with: pictureURL) { (data, response, error) in
-            if let error = error {
-                print("Error downloading picture: \(error)")
-            } else {
-                // No errors found.
-                if let response = response as? HTTPURLResponse {
-                    print("Downloaded picture with response code \(response.statusCode)")
-                    if let imageData = data {
-                        let image = UIImage(data: imageData)
-                        
-                        // Showing the image by main thread
-                        DispatchQueue.main.async {
-                            cell.previewImage.image = image
-                        }
-                        
-                    } else {
-                        print("Couldn't get image: Image is nil")
-                    }
-                } else {
-                    print("Couldn't get response code for some reason")
-                }
-            }
-        }
-        
-        pictureDownloadTask.resume()
-        
+
         return cell
     }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+
+        if segue.identifier == "ShowWebPhoto" {
+            let photoVC = segue.destination as? PhotoViewController
+            guard let cell = sender as? UITableViewCell, let indexPath = tableView.indexPath(for: cell) else{
+                return
+            }
+            photoVC?.photoURL = self.photos[indexPath.row].webformatURL
+        }
     }
-    */
+    
+    
+    // MARK: - Private Methods
+    private func loadPhotos(forCategory category: String){
+        Alamofire.request(Photo.endpointForCategory(category)).responseJSON { response in
+            if let data = response.data{
+                let jsonData = JSON(data: data)
+                if let hits = jsonData["hits"].arrayObject{
+                    for hit in hits {
+                        let photo = Photo.init(json: hit as! [String: Any])
+                        self.photos.append(photo!)
+                    }
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                } else {
+                    print("Wrong key name")
+                }
+            }
+        }
+    }
 
 }
