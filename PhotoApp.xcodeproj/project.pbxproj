@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3D9DC824613557BD8A59BA43 /* Pods_PhotoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B08326AC54E0ABD8FBE460A /* Pods_PhotoApp.framework */; };
+		DD0F783E1F80CA2200A00C43 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0F783D1F80CA2200A00C43 /* PhotoViewController.swift */; };
 		DDDA90DD1F7FB68400128051 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDA90DC1F7FB68400128051 /* AppDelegate.swift */; };
-		DDDA90DF1F7FB68400128051 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDA90DE1F7FB68400128051 /* ViewController.swift */; };
 		DDDA90E21F7FB68400128051 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DDDA90E01F7FB68400128051 /* Main.storyboard */; };
 		DDDA90E41F7FB68400128051 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DDDA90E31F7FB68400128051 /* Assets.xcassets */; };
 		DDDA90E71F7FB68400128051 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DDDA90E51F7FB68400128051 /* LaunchScreen.storyboard */; };
@@ -20,9 +20,9 @@
 
 /* Begin PBXFileReference section */
 		8B08326AC54E0ABD8FBE460A /* Pods_PhotoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PhotoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD0F783D1F80CA2200A00C43 /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
 		DDDA90D91F7FB68400128051 /* PhotoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDDA90DC1F7FB68400128051 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DDDA90DE1F7FB68400128051 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		DDDA90E11F7FB68400128051 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DDDA90E31F7FB68400128051 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DDDA90E61F7FB68400128051 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -87,7 +87,7 @@
 				DDDA90F01F7FE96700128051 /* Photo.swift */,
 				DDDA90F21F7FFC6300128051 /* PhotoTableViewCell.swift */,
 				DDDA90F51F8004F000128051 /* PhotoTableViewController.swift */,
-				DDDA90DE1F7FB68400128051 /* ViewController.swift */,
+				DD0F783D1F80CA2200A00C43 /* PhotoViewController.swift */,
 				DDDA90E01F7FB68400128051 /* Main.storyboard */,
 				DDDA90E31F7FB68400128051 /* Assets.xcassets */,
 				DDDA90DC1F7FB68400128051 /* AppDelegate.swift */,
@@ -211,12 +211,14 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/UIImageColors/UIImageColors.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIImageColors.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -233,8 +235,8 @@
 				DDDA90F31F7FFC6300128051 /* PhotoTableViewCell.swift in Sources */,
 				DDDA90F11F7FE96700128051 /* Photo.swift in Sources */,
 				DDDA90F61F8004F000128051 /* PhotoTableViewController.swift in Sources */,
-				DDDA90DF1F7FB68400128051 /* ViewController.swift in Sources */,
 				DDDA90DD1F7FB68400128051 /* AppDelegate.swift in Sources */,
+				DD0F783E1F80CA2200A00C43 /* PhotoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
